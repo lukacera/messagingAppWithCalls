@@ -27,6 +27,6 @@ const callSchema = new Schema<CallType>({
 })
 
 
-const commentModel: Model<CallType> = model<CallType>("Call", );
+const Call: Model<CallType> = model<CallType>("Call", callSchema);
 
-export default commentModel
+export default Call

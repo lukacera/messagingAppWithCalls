@@ -1,10 +1,9 @@
-import { model, Schema, Model } from 'mongoose';
-import {UserType} from "@/app/types/userType"
+import { model, Schema, Model, models } from 'mongoose';
+import { UserType } from "@/app/types/userType";
 
 // Schema for single user
 const UserSchema: Schema<UserType> = new Schema({
     username: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true },
     password_hash: { type: String, required: true },
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now },
@@ -14,9 +13,9 @@ const UserSchema: Schema<UserType> = new Schema({
             ref: "User"
         }
     ]
-  });
+});
 
+// Ensure that user model is compiled only once, to prevent the error
+const User: Model<UserType> = models.User || model<UserType>("User", UserSchema);
 
-const userModel: Model<UserType> = model<UserType>("User",UserSchema );
-
-export default userModel
+export default User;
