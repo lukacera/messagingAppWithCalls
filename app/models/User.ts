@@ -16,6 +16,6 @@ const UserSchema: Schema<UserType> = new Schema({
 });
 
 // Ensure that user model is compiled only once, to prevent the error
-const User: Model<UserType> = models.User || model<UserType>("User", UserSchema);
+const User: Model<UserType> = model<UserType>("User", UserSchema);
 
 export default User;
