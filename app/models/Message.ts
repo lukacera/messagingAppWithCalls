@@ -7,7 +7,7 @@ const messageSchema: Schema<MessageType> = new Schema({
     senderId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
     receiverId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
     messageText: { type: String, required: true },
-    sentAt: { type: Date, default: Date.now },
+    sentAt: { type: Date, default: Date.now }
   });
 
 
