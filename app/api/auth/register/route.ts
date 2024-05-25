@@ -33,7 +33,11 @@ export async function POST(req: NextRequest & { body: {
   
       // Return the created user
       return NextResponse.json({user: user})
-    } catch (error) {
+    } catch (error: any) {
+      if (error.code === 11000) {
+        // This is the MongoDB error code for a duplicate key
+        return NextResponse.json({ error: "Username is already taken" }, { status: 400 });
+    }
       return NextResponse.json({error: "Error occurred while creating new user!"})
     }
   }
