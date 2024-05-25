@@ -3,7 +3,7 @@ import { UserType } from "@/app/types/userType";
 
 // Schema for single user
 const UserSchema: Schema<UserType> = new Schema({
-    username: { type: String, required: true, unique: true },
+    username: { type: String, required: true, unique:true },
     password_hash: { type: String, required: true },
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now },
