@@ -19,18 +19,17 @@ export async function POST(req: NextRequest & { body: {
         return NextResponse.json({ error: "Missing password or username" }, {status: 400})
       }
 
-      await connectToDB()
       // Generate salt and hash the password
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt)
 
+      await connectToDB()
       // Create a new user in the database
       const user = await User.create({
         contacts: [],
         password_hash: hashedPassword,
         username: username
       });
-  
       // Return the created user
       return NextResponse.json({user: user}, {status: 200})
     } catch (error: any) {

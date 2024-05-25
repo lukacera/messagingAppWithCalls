@@ -1,21 +1,26 @@
 import jwt from 'jsonwebtoken';
 
-import User from "./app/models/User";
 import { NextRequest, NextResponse } from "next/server";
-import {UserType} from "@/app/types/userType"
+
 
 interface customRequest extends NextRequest {
-    user: UserType
+    decodedId: string
 }
 
 // Protects route, so only signed User can access it
 export async function middleware(req: customRequest) {
-    
+    const { pathname } = req.nextUrl;
+
+    // Exclude /api/auth/* routes
+    if (pathname.startsWith('/api/auth')) {
+        return NextResponse.next();
+    }
+    console.log("Run middleware")
+
     /*
         Extract token from Authorization header, if it exists
         Authorization: Bearer <JWT>
     */
-    console.log("Middleware")
     const token = req.headers.get("Authorization")?.startsWith("Bearer ") ? req.headers.get("Authorization")?.split(" ")[1] : undefined;
     if (!token) {
         // No token provided
@@ -23,19 +28,10 @@ export async function middleware(req: customRequest) {
     }
 
     try {
-        // Verify token
+        // Verify token and put it on request
         const decoded: any = jwt.verify(token, process.env.JWT_SECRET || "");
-
-        // Get user from token's Payload, exclude password from result
-        const user = await User.findById(decoded.id)
-            .select("-password")
-
-        if (!user) {
-            throw new Error("User not found");
-        }
-
-        // Attach user information to the req object
-        req.user = user;
+        
+        req.decodedId = decoded.id
 
         return NextResponse.next()
     } catch (error) {
@@ -45,4 +41,4 @@ export async function middleware(req: customRequest) {
 
 export const config = {
     matcher: '/api/:path*',
-};
+}
