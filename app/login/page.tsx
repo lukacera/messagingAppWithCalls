@@ -9,8 +9,14 @@ const LoginPage: React.FC = () => {
         {/* Login container */}
         <div className='w-full h-full flex items-center justify-center flex-col
         gap-7 p-20 px-60'>
-          <div className='flex flex-col items-center gap-2'>
-            <h2 className='font-bold text-[2.2rem] tracking-wide'>Reach me</h2>
+          <div className='flex flex-col items-center w-full relative'>
+              <div className='w-[15rem] aspect-square absolute -top-40'>
+                <CldImage
+                alt=''
+                src="Reach_me_prev_ui_aqi0ko"
+                fill
+              />
+              </div>
             <span className='font-semibold text-[1.2rem] tracking-wider'>
               Welcome back!
             </span>
@@ -21,11 +27,11 @@ const LoginPage: React.FC = () => {
           <div className='flex flex-col gap-8 w-full'>
             <div className='flex flex-col gap-1 items-start'>
               <span>Username</span>
-              <input type="text" className='py-2 w-full rounded-md border-2'/>
+              <input type="text" className='py-2 px-4  w-full rounded-md border-2'/>
             </div>
             <div className='flex flex-col gap-1 items-start'>
               <span>Password</span>
-              <input type="text" className='py-2 w-full rounded-md border-2'/>
+              <input type="text" className='py-2  px-4 w-full rounded-md border-2'/>
             </div>          
           </div>
           <div className='bg-purple-600 w-full flex justify-center 
@@ -49,7 +55,6 @@ const LoginPage: React.FC = () => {
           alt=''
           src="videoCall_heaswe" // Use this sample image or upload your own via the Media Explorer
           fill
-          radius={40}
         />
       </div>   
     </main>

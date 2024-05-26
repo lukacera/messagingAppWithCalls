@@ -1,8 +1,6 @@
-import bcrypt from "bcrypt"
 import User from "@/app/models/User";
 import { NextResponse, NextRequest } from "next/server";
-import { generateToken } from "@/app/utils/generateToken";
-import {MessageType} from "@/app/types/messageType"
+
 import Conversation from "@/app/models/Conversation";
 import Message from "@/app/models/Message";
 import { connectToDB } from "@/app/configs/db";
