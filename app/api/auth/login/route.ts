@@ -26,7 +26,7 @@ export async function POST(req: NextRequest & { body: {
   
       // Check if user is not found in db, terminate whole process
       if (!user) {
-        return NextResponse.json({ error: "User not found" }, {status: 400})
+        return NextResponse.json({ error: "Username not found" }, {status: 400})
       }
 
       const checkPassword = await bcrypt.compare(password, user.password_hash); // Compare passwords
@@ -36,7 +36,6 @@ export async function POST(req: NextRequest & { body: {
           return NextResponse.json({error: "Password is incorrect"}, {status: 400})
       }
 
-      console.log("Password checked")  
       const expires = new Date(Date.now() + 10 * 1000);
 
       const token = await generateToken({ id: user.id, expires: expires}); // Ensure generateToken is awaited and payload is an object
