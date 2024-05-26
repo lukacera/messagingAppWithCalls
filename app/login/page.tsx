@@ -1,9 +1,37 @@
 "use client"
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {CldImage} from "next-cloudinary"
 import { FaArrowRight } from "react-icons/fa";
+import { login } from '../utils/fetchFunctions/loginAPI';
+import { useRouter} from 'next/navigation';
 
 const LoginPage: React.FC = () => {
+    const router = useRouter()
+    const [password, setPassword] = useState<string>("")  
+    const [username, setUsername] = useState<string>("")
+    const [errorValidation, setErrorValidation] = useState<string>('')
+
+    // Function that logs user in
+    const handleLogin = async () => {
+
+      const fetched_data = await login(username, password);
+
+      if (typeof (fetched_data) === "string") { // This means that !response.ok
+          setErrorValidation(fetched_data)
+          return
+      }
+    
+      router.push("/")
+  }
+
+  useEffect(() => {
+    console.log("Username changed: " + username)
+  }, [username])
+  
+  useEffect(() => {
+    console.log("password changed: " + password)
+  }, [password])
+
   return (
     <main className='w-screen h-screen grid grid-cols-2'>
         {/* Login container */}
@@ -17,25 +45,35 @@ const LoginPage: React.FC = () => {
                 fill
               />
               </div>
-            <span className='font-semibold text-[1.2rem] tracking-wider'>
-              Welcome back!
-            </span>
-            <span className='tracking-tight'>
-              Please enter your details
-            </span>
+            <div className='grid place-items-center gap-3'>
+              <span className='font-bold text-[1.4rem] tracking-wider'>
+                Welcome back!
+              </span>
+              <span className='tracking-tight'>
+                Please enter your details
+              </span>
+            </div>
           </div>
-          <div className='flex flex-col gap-8 w-full'>
+          <form className='flex flex-col gap-8 w-full'>
+            {/* Username */}
             <div className='flex flex-col gap-1 items-start'>
               <span>Username</span>
-              <input type="text" className='py-2 px-4  w-full rounded-md border-2'/>
+              <input type="text" value={username} 
+              onChange={(e) => setUsername(e.target.value)}
+              className='py-2 px-4  w-full rounded-md border-2'/>
             </div>
+            {/* Password */}
             <div className='flex flex-col gap-1 items-start'>
               <span>Password</span>
-              <input type="text" className='py-2  px-4 w-full rounded-md border-2'/>
+              <input type="text" value={password} 
+              onChange={(e) => setPassword(e.target.value)}
+              className='py-2  px-4 w-full rounded-md border-2'
+              />
             </div>          
-          </div>
+          </form>
           <div className='bg-purple-600 w-full flex justify-center 
-          items-center gap-4 p-3 text-white'>
+          items-center gap-4 p-3 text-white cursor-pointer'
+          onClick={() => handleLogin()}>
             <span>
               Login
             </span>
@@ -53,7 +91,7 @@ const LoginPage: React.FC = () => {
       <div className='relative w-full h-full'>
         <CldImage
           alt=''
-          src="videoCall_heaswe" // Use this sample image or upload your own via the Media Explorer
+          src="videoCall_heaswe" 
           fill
         />
       </div>   

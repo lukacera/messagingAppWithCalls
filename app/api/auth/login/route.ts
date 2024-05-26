@@ -20,7 +20,6 @@ export async function POST(req: NextRequest & { body: {
         return NextResponse.json({ error: "Missing password or username" }, {status: 400})
       }
 
-      console.log("Logging user...")
 
       await connectToDB()
       const user = await User.findOne({username: username}) 
@@ -30,7 +29,6 @@ export async function POST(req: NextRequest & { body: {
         return NextResponse.json({ error: "User not found" }, {status: 400})
       }
 
-      console.log("...")
       const checkPassword = await bcrypt.compare(password, user.password_hash); // Compare passwords
 
       // If password is not correct, return status 400
