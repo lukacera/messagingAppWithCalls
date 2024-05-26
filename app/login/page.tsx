@@ -17,8 +17,11 @@ const LoginPage: React.FC = () => {
     const [passwordIncorrect, setPasswordIncorrect] = useState<boolean>(false)
 
     // Function that logs user in
-    const handleLogin = async () => {
+    const handleLogin = async (e:any) => {
   
+      e.preventDefault()
+
+      console.log("Handle login")
       if (!username || !password){
         setErrorValidation("Missing credentials")
         setPasswordIncorrect(true)
@@ -76,7 +79,8 @@ const LoginPage: React.FC = () => {
                 </span>
               </div>
             </div>
-            <form className='flex flex-col gap-8 w-full'>
+            <form onSubmit={(e) => handleLogin(e)}
+            className='flex flex-col gap-8 w-full'>
               {/* Username */}
               <div className='flex flex-col gap-1 items-start'>
                 <span>Username</span>
@@ -93,28 +97,28 @@ const LoginPage: React.FC = () => {
                 className={`py-2 px-4  w-full rounded-md border-2
                 ${passwordIncorrect ? "border-red-400" : null}`}
                 />
-              </div>          
-            </form>
-            <div className='min-h-[1.5rem]'>
+              </div> 
+              <div className='min-h-[1.5rem] text-center'>
               {errorValidation && (
                 <motion.span 
-                  initial={{ opacity: 0, y: 300 }} 
+                  initial={{ opacity: 0, y: 100 }} 
                   animate={{ opacity: 1, x: 0 }} 
-                  transition={{ delay: 0.2 }} // Delay before animation starts
                   className='text-red-600 font-semibold tracking-wide'
                 >
                   {errorValidation}
                 </motion.span>
-              )}
-            </div>
-            <div className='bg-purple-600 w-full flex justify-center 
-            items-center gap-4 p-3 text-white cursor-pointer'
-            onClick={() => handleLogin()}>
-              <span>
-                Login
-              </span>
-              <FaArrowRight />
-            </div>
+                )}
+              </div>
+              <button type='submit' 
+              className='bg-purple-600 w-full flex justify-center 
+              items-center gap-4 p-3 text-white cursor-pointer'>
+                <span>
+                  Login
+                </span>
+                <FaArrowRight />
+              </button>       
+            </form>
+            
             <p className='flex gap-1'>
               <span>
                 Don't have an account?
