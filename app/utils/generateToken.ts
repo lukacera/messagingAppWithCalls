@@ -1,8 +1,20 @@
-import {ObjectId} from "mongoose"
-import jwt from 'jsonwebtoken';
+import { SignJWT } from 'jose';
+import { TextEncoder } from 'util';
 
-// @desc Function that generates JWT token
-export const generateToken = (id: ObjectId) => {
-    return  jwt.sign({ id }, process.env.JWT_SECRET || "", {
-        expiresIn: "1d" })
+const secretKey = "secret";
+const key = new TextEncoder().encode(secretKey);
+
+export async function generateToken(payload: { id: any; expires: Date; }) {
+    // Ensure payload is an object
+    if (typeof payload !== 'object' || payload === null) {
+        throw new Error('Payload must be a non-null object');
+    }
+
+    // Convert the expiration time to seconds
+    const expirationSeconds = Math.floor(payload.expires.getTime() / 1000);
+
+    return await new SignJWT({ ...payload, exp: expirationSeconds })
+        .setProtectedHeader({ alg: "HS256" })
+        .setIssuedAt()
+        .sign(key);
 }

@@ -1,4 +1,4 @@
-import { model, Schema, Model } from 'mongoose';
+import { model, Schema, Model, models } from 'mongoose';
 import {CallType} from "@/app/types/callType"
 
 // Schema for calls; both audio & video
@@ -27,6 +27,6 @@ const callSchema = new Schema<CallType>({
 })
 
 
-const Call: Model<CallType> = model<CallType>("Call", callSchema);
+const Call: Model<CallType> = models.Call || model<CallType>("Call", callSchema);
 
 export default Call

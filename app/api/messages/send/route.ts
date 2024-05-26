@@ -3,6 +3,9 @@ import User from "@/app/models/User";
 import { NextResponse, NextRequest } from "next/server";
 import { generateToken } from "@/app/utils/generateToken";
 import {MessageType} from "@/app/types/messageType"
+import Conversation from "@/app/models/Conversation";
+import Message from "@/app/models/Message";
+import { connectToDB } from "@/app/configs/db";
 
 
 /*
@@ -13,48 +16,57 @@ import {MessageType} from "@/app/types/messageType"
     conversationId: ObjectId;
 */
 
+interface customRequest extends NextRequest {
+    decodedId: string
+}
+
 // Function for loging user in
-export async function POST(req: NextRequest & { body: {
-  username: string,
-  password: string
-} }) {
+export async function POST(req: customRequest) {
     try {
-      const bodyText = await req.text();
-      
-      const requestBody = JSON.parse(bodyText); 
-      
-      const { password, username } = requestBody; // Parse the string data to JSON
-      
-      if (!password || !username) {
-        return NextResponse.json({ error: "Missing password or username" }, {status: 400})
-      }
+        const currentUserID = req.headers.get("id")
+        const currentUser = await User.findById(currentUserID)
 
-
-      const user = await User.findOne({username: username}) 
-  
-      // Check if user is not found in db, terminate whole process
-      if (!user) {
-        return NextResponse.json({ error: "User not found" }, {status: 400})
-      }
-
-      const checkPassword = await bcrypt.compare(password, user.password_hash); // Compare passwords
-
-      // If password is not correct, return status 400
-      if (!checkPassword) {
-          return NextResponse.json({error: "Password is incorrect"}, {status: 400})
-      }
-
-      
-      return NextResponse.json({
-        userData: {
-            _id: user.id,
-            username: user.username,
-            contacts: user.contacts,
-            token: generateToken(user.id)
+        if (!currentUser) {
+            return NextResponse.json({ error: "User not found in DB" }, {status: 400})
         }
+        const bodyText = await req.text();
+        
+        const requestBody = JSON.parse(bodyText);  // Parse the string data to JSON
+        
+        const { senderId, receiverId, messageText, conversationId } = requestBody;
+        
+        if (!senderId || !receiverId || !messageText) {
+            return NextResponse.json({ error: "Missing info about the message!" }, {status: 400})
+        }
+
+        await connectToDB()
+
+        // Check if sender and receiver are in db
+        const sender = await User.findById(senderId) 
+        if (!sender) return NextResponse.json({message: "Sender not found!"}, {status: 400})
+
+        const receiver = await User.findById(receiverId) 
+        if (!receiver) return NextResponse.json({message: "Receiver not found!"}, {status: 400})    
+
+
+        // Create new conversation if it is not created already between those 2
+        let conversation;
+        !conversationId ? conversation = await Conversation.create({
+            messages: [],
+            participants: [senderId, receiverId]
+        }) : conversation = await Conversation.findById(conversationId) // Else, get it from db
+
+        const message = await Message.create({
+            conversationId: conversation?.id,
+            messageText: messageText,
+            senderId: senderId
+        })
+        
+      return NextResponse.json({
+        message: message
       }, {status: 200})
 
     } catch (error: any) {
-      return NextResponse.json({error: "Error occurred while logging user in!"})
+      return NextResponse.json({error: "Error occurred while logging user in!"}, {status: 400})
     }
   }

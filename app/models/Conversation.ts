@@ -1,4 +1,4 @@
-import { model, Schema, Model } from 'mongoose';
+import { model, Schema, Model, models } from 'mongoose';
 import {ConversationType} from "@/app/types/conversationType"
 
 // Schema for conversation; it accepts both group chats and chats between 2 people
@@ -9,6 +9,6 @@ const ConversationSchema: Schema<ConversationType> = new Schema({
     updatedAt: { type: Date, default: Date.now },
 });
 
-const Conversation: Model<ConversationType> = model<ConversationType>("Conversation", ConversationSchema );
+const Conversation: Model<ConversationType> = models.Conversation || model<ConversationType>("Conversation", ConversationSchema );
 
 export default Conversation
