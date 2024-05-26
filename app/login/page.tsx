@@ -130,6 +130,7 @@ const LoginPage: React.FC = () => {
           </div>
         <div className='relative w-full h-full'>
           <CldImage
+            priority={true}
             alt=''
             src="videoCall_heaswe" 
             fill
