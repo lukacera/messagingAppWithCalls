@@ -121,7 +121,7 @@ const LoginPage: React.FC = () => {
             
             <p className='flex gap-1'>
               <span>
-                Don't have an account?
+                Don&apos;t have an account?
               </span>
               <span className='text-purple-600'>
                 Sign up
