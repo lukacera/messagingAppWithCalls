@@ -50,6 +50,7 @@ export async function POST(req: NextRequest & { body: {
       }, {status: 200})
 
     } catch (error: any) {
+      console.log(error)
       return NextResponse.json({error: "Error occurred while logging user in!"}, {status: 400})
     }
   }
