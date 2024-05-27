@@ -4,11 +4,11 @@ import { FaQuestion } from "react-icons/fa";
 const rules = {
     username: [
         "Must consist of at least 1 uppercase letter, 1 lowercase letter, and 1 number",
-        "Must have between 6 and 20 characters"
+        "Must have between 6 and 15 characters"
     ],
     password: [
         "Must consist of at least 1 uppercase letter, 1 lowercase letter, and 1 number",
-        "Must have at least 8 characters"
+        "Must have between 8 and 20 characters"
     ]
 };
 

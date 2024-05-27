@@ -21,16 +21,15 @@ export async function POST(req: NextRequest) {
     await connectToDB();
 
     // Create a new user in the database
-    const user = await User.create({
+    await User.create({
       contacts: [],
       password_hash: hashedPassword,
-      username: username,
+      username: username
     });
 
-    console.log(user);
-
+   
     // Return the created user
-    return NextResponse.json({ user: user }, { status: 201 });
+    return NextResponse.json({ message: "User is registered" }, { status: 201 });
   } catch (error: any) {
     if (error.code === 11000) {
       // This is the MongoDB error code for a duplicate key
