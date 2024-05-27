@@ -22,12 +22,21 @@ const LoginPage: React.FC = () => {
       e.preventDefault()
 
       console.log("Handle login")
-      if (!username || !password){
+      if (!username && !password){
         setErrorValidation("Missing credentials")
         setPasswordIncorrect(true)
         setUsernameNotFound(true)
         return
-      } 
+      } else if (!username) {
+        setErrorValidation("Missing credentials")
+        setUsernameNotFound(true)
+        return
+      } else if (!password) {
+        setErrorValidation("Missing credentials")
+        setPasswordIncorrect(true)
+        return
+      }
+
 
       // Proceed with login if validation passes
       const fetched_data = await login(username, password);
