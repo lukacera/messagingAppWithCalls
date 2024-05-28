@@ -38,7 +38,6 @@ export const LoginForm: React.FC = () => {
   
         e.preventDefault()
   
-        console.log("Handle login")
         if (!username && !password){
           setErrorValidation("Missing credentials")
           setPasswordIncorrect(true)

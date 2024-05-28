@@ -15,26 +15,21 @@ const withAuth = (WrappedComponent: React.ComponentType) => {
     const runCheck = async () => {
       const token = localStorage.getItem('token');
       if (!token) {
-        console.log("No token found")
         router.push('/login');
         return
       }
 
       const isValid = await verifyToken(token);
-      console.log(isValid)
       if (!isValid) {
-        console.log("Token is not valid")
         router.push("/login")
         return
       }
 
-      console.log("Token is valid!")
     }
    
 
     useEffect(() => {
       runCheck()
-      console.log("Running check...")
     }, [pathname, router]); // Run the effect whenever the pathname changes
 
     // Render the wrapped component
