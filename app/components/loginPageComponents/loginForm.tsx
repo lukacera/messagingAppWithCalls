@@ -54,17 +54,24 @@ export const LoginForm: React.FC = () => {
           return
         }
   
-  
+
         // Proceed with login if validation passes
         const fetched_data = await login(username, password);
     
         if (typeof (fetched_data) === "string") { // This means that !response.ok
-          fetched_data.includes("Username") ? setUsernameNotFound(true) : setPasswordIncorrect(true)
+          if (fetched_data.includes("Username")){
+            setUsernameNotFound(true)
+            setUsername("") 
+          } else {
+            setPasswordIncorrect(true) 
+            setPassword("")
+          } 
           setErrorValidation(fetched_data);
           return;
         }
     
-        router.push("/");
+        // Login is success, redirect user to home dashboard page
+        router.push("/home");
       };
   
   return (

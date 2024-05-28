@@ -24,17 +24,13 @@ export const RegistrationForm: React.FC = () => {
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [errorValidation, setErrorValidation] = useState<string>("");
 
-    // State that checks if username is already taken by some other user
-    const [usernameError, setUsernameError] = useState<boolean>(false);
-    const [passwordError, setPasswordError] = useState<boolean>(false);
+    
 
     const handleRegistration = async (e: any) => {
         e.preventDefault();
 
         // Clear previous errors
         setErrorValidation("");
-        setUsernameError(false);
-        setPasswordError(false);
 
         try {
             // Validate inputs using Zod schema
@@ -43,25 +39,27 @@ export const RegistrationForm: React.FC = () => {
             // Check if passwords match
             if (password !== confirmPassword) {
                 setErrorValidation("Passwords do not match");
-                setPasswordError(true);
                 return;
             }
 
             // Proceed with registration if validation passes
             const fetched_data = await register(username, password);
 
-            if (typeof fetched_data === "string") { // This means that !response.ok
-                fetched_data.includes("Username") ? setUsernameError(true) : setPasswordError(true);
-                setErrorValidation(fetched_data);
-                return;
-            }
+           
 
             router.push("/");
         } catch (error) {
             if (error instanceof z.ZodError) {
                 const validationError = error.errors[0];
-                console.log(validationError)
-                setErrorValidation(validationError.message);
+                const errMessage = validationError.message
+                if (errMessage.includes("Username")){
+                    setUsername("") 
+                  } else {
+                    setPassword("")
+                    setConfirmPassword("")
+                  } 
+                  setErrorValidation(errMessage);
+                  return;
             }
         }
     };
