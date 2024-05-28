@@ -3,6 +3,7 @@ import React from 'react';
 import {CldImage} from "next-cloudinary"
 import Link from 'next/link';
 import { LoginForm } from '../components/loginPageComponents/loginForm';
+import withAuth from '../components/withAuth';
 
 const LoginPage: React.FC = () => {
     return (
@@ -52,4 +53,4 @@ const LoginPage: React.FC = () => {
     );
 };
 
-export default LoginPage;
+export default withAuth(LoginPage);
