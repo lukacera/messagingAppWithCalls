@@ -1,7 +1,7 @@
 import { SignJWT } from 'jose';
 import { TextEncoder } from 'util';
 
-const secretKey = "secret";
+const secretKey = process.env.JWT_SECRET;
 const key = new TextEncoder().encode(secretKey);
 
 export async function generateToken(payload: { id: any; expires: Date; }) {

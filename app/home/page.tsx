@@ -3,8 +3,9 @@ import { CldImage } from 'next-cloudinary'
 import React from 'react'
 import { FaSearch } from "react-icons/fa";
 import SingleProfileSidebar from '../components/mainPageComponents/SingleProfileSidebar';
+import withAuth from '../components/withAuth';
 
-export default function HomePage() {
+function HomePage() {
   return (
     <main className='w-screen h-screen grid grid-cols-[8%_17%_75%]'>
         {/* First column */}
@@ -49,3 +50,6 @@ export default function HomePage() {
     </main>
   )
 }
+
+export default withAuth(HomePage);
+

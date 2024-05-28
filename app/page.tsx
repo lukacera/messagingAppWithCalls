@@ -1,20 +1,10 @@
 "use client"
 
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import withAuth from './components/withAuth';
 
 const HomePage = () => {
   const router = useRouter();
-
-  useEffect(() => {
-    // Check if token exists in local storage
-    const token = localStorage.getItem('token');
-    
-    // If token does not exist, redirect to login page
-    if (!token) {
-      router.push('/login');
-    }
-  }, []);
 
   return (
     <div>
@@ -23,4 +13,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default withAuth(HomePage);
