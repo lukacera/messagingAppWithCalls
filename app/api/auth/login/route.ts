@@ -36,7 +36,7 @@ export async function POST(req: NextRequest & { body: {
           return NextResponse.json({error: "Password is incorrect"}, {status: 400})
       }
 
-      const expires = new Date(Date.now() + 10 * 1000);
+      const expires = new Date(Date.now() + 36000 * 1000);
 
       const token = await generateToken({ id: user.id, expires: expires}); // Ensure generateToken is awaited and payload is an object
 
