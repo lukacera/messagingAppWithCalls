@@ -15,6 +15,7 @@ const withAuth = (WrappedComponent: React.ComponentType) => {
     
     // Function that runs everyhting 
     const runCheck = async () => {
+      console.log("Running check")
       const token = localStorage.getItem('token');
       if (!token) {
         router.push('/login');
@@ -22,7 +23,6 @@ const withAuth = (WrappedComponent: React.ComponentType) => {
       }
 
       const isValid = await verifyToken(token);
-      console.log ("Is token valid? :" + isValid)
       // Remove token from lcoal storage if it is not valid 
       if (!isValid) {
         localStorage.removeItem("token")
@@ -30,9 +30,9 @@ const withAuth = (WrappedComponent: React.ComponentType) => {
         return
       }
 
-      // If token is valid and user is currently at login or register page
+      // If token is valid and user is currently at login or register page or / page
       // redirect him to home page
-      if (pathname === "/login" || pathname === "/register") {
+      if (["/login", "/register", "/"].includes(pathname)) {
         router.push("/home");
         return
       }

@@ -6,7 +6,7 @@ export const GET = async (req: NextRequest) => {
     try {
         const currentUserID = req.headers.get("id")
         const currentUser = await User.findById(currentUserID)
-        .select("-password_hash") // Get him from DB, by using JWT, exclude password
+        .select("-password_hash -created_at -updated_at"); // Exclude those fields from data that is returned to FE
         
         return NextResponse.json({
             data: currentUser
