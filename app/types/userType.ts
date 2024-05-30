@@ -1,4 +1,5 @@
 import {ObjectId} from "mongoose"
+import { ConversationType } from "./conversationType"
 
 export type UserType = {
     _id?: ObjectId,
@@ -6,7 +7,7 @@ export type UserType = {
     password_hash: string,
     created_at: Date,
     updated_at: Date,
-    contacts: ObjectId[],
-    conversations: ObjectId[],
+    contacts: UserType[],
+    conversations: ConversationType[],
     image?: string
 }

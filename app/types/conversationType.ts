@@ -1,8 +1,9 @@
-import {ObjectId} from "mongoose"
+import { UserType } from "./userType";
+import { MessageType } from "./messageType";
 
 export interface ConversationType {
-  participants: ObjectId[];
-  messages: ObjectId[];
+  participants: UserType[];
+  messages: MessageType[];
   createdAt: Date;
   updatedAt: Date;
 }

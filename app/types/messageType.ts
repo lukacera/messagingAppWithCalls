@@ -1,8 +1,10 @@
-import {ObjectId} from "mongoose"
+import { ConversationType } from "./conversationType"
+import { UserType } from "./userType"
 
 export type MessageType = {
-    senderId: ObjectId,
+    senderId: UserType,
+    receiverId: UserType,
     messageText: string,
     sentAt: Date,
-    conversationId: ObjectId
+    conversationId: ConversationType
 }
