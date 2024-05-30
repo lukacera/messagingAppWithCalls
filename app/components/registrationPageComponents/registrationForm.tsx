@@ -45,9 +45,8 @@ export const RegistrationForm: React.FC = () => {
             // Proceed with registration if validation passes
             const fetched_data = await register(username, password);
 
-           
-
-            router.push("/");
+            typeof fetched_data === "string" ? setErrorValidation(fetched_data) : router.push("/");
+        
         } catch (error) {
             if (error instanceof z.ZodError) {
                 const validationError = error.errors[0];

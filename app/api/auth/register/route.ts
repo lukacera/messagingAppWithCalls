@@ -22,16 +22,17 @@ export async function POST(req: NextRequest) {
 
     // Create a new user in the database
     await User.create({
-      contacts: [],
       password_hash: hashedPassword,
-      username: username
+      username: username,
+      contacts: [],
+      conversations: []
     });
 
-   
     // Return the created user
     return NextResponse.json({ message: "User is registered" }, { status: 201 });
   } catch (error: any) {
     if (error.code === 11000) {
+      console.log("User tried to register with an existing username")
       // This is the MongoDB error code for a duplicate key
       return NextResponse.json({ error: "Username is already taken" }, { status: 400 });
     }
