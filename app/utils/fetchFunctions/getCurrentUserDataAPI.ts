@@ -17,7 +17,6 @@ export const getCurrentUserData = async () => {
         return data.data // Returns data about currentUser
             
     } catch (error) {
-        console.error('Error during login:', error);
         throw new Error('Operation failed!');
     }
 };

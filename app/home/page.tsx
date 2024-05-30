@@ -1,13 +1,17 @@
 "use client"
 import { CldImage } from 'next-cloudinary'
-import React from 'react'
+import React, { useContext } from 'react'
 import { FaSearch } from "react-icons/fa";
 import SingleProfileSidebar from '../components/mainPageComponents/SingleProfileSidebar';
 import withAuth from '../components/withAuth';
 import { FaPhone } from "react-icons/fa6";
 import { BsCameraVideoFill } from "react-icons/bs";
+import { UserContext } from '@/contexts/UserContext';
+import { UserType } from '../types/userType';
 
 function HomePage() {
+    const {currentUserData} = useContext(UserContext)
+
     return (
         <main className='w-screen h-screen grid grid-cols-[8%_17%_75%]'>
             {/* First column */}
@@ -44,9 +48,10 @@ function HomePage() {
                     </div>
                     <div className='flex flex-col gap-5 mt-5 w-[95%] mx-auto
                     border-b-2 pb-7'>
-                        <SingleProfileSidebar />
-                        <SingleProfileSidebar />
-                        <SingleProfileSidebar />
+                       {currentUserData.contacts?.map((contact: UserType) => 
+                            <SingleProfileSidebar contact={contact} />
+                        )}
+                        
                     </div>
                 </div>
             </div>
@@ -62,7 +67,7 @@ function HomePage() {
                                 Username
                             </span>
                             <span className='text-green-600 font-bold text-sm'>
-                                Username is typing...
+                               {currentUserData.username}
                             </span>
                         </div>
                     </div>
