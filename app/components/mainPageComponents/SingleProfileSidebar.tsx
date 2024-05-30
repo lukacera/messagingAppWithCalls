@@ -1,7 +1,10 @@
+import { UserType } from '@/app/types/userType'
 import React from 'react'
 
-export default function SingleProfileSidebar() {
-  return (
+const SingleProfileSidebar: React.FC<{contact: UserType}> = ({
+    contact
+}) => {
+return (
         <div className='grid grid-cols-[20%_80%]'>
             <div className='grid place-items-center'>
                 <div className='w-10 aspect-square rounded-full bg-red-400'>
@@ -10,7 +13,7 @@ export default function SingleProfileSidebar() {
             <div className='flex flex-col gap-2 w-full'>
                 <div className='flex justify-between items-start mr-7'>
                     <span>
-                        Username
+                        {contact.username}
                     </span>
                     <span>
                         15:40
@@ -23,3 +26,6 @@ export default function SingleProfileSidebar() {
         </div>  
     )
 }
+
+
+export default SingleProfileSidebar
