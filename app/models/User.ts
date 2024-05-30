@@ -7,19 +7,25 @@ const UserSchema: Schema<UserType> = new Schema({
     password_hash: { type: String, required: true },
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now },
-    contacts:  [
-        {
-            type: Schema.ObjectId,
-            ref: "User"
-        }
-    ],
-    conversations: [
-        {
-            type: Schema.ObjectId,
-            ref: "Conversation"
-        }
-    ],
-    image: { type: String }
+    contacts:  {
+        type: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "User"
+            }
+        ],
+        default: []
+    },
+    conversations: {
+        type: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Conversation"
+            }
+        ],
+        default: []
+    },
+    image: { type: String, default: ""}
 });
 
 // Ensure that user model is compiled only once, to prevent the error
