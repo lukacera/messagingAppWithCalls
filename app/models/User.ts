@@ -18,7 +18,8 @@ const UserSchema: Schema<UserType> = new Schema({
             type: Schema.ObjectId,
             ref: "Conversation"
         }
-    ]
+    ],
+    image: { type: String }
 });
 
 // Ensure that user model is compiled only once, to prevent the error

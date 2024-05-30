@@ -7,5 +7,6 @@ export type UserType = {
     created_at: Date,
     updated_at: Date,
     contacts: ObjectId[],
-    conversations: ObjectId[]
+    conversations: ObjectId[],
+    image?: string
 }
