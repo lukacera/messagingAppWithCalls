@@ -12,6 +12,12 @@ const UserSchema: Schema<UserType> = new Schema({
             type: Schema.ObjectId,
             ref: "User"
         }
+    ],
+    conversations: [
+        {
+            type: Schema.ObjectId,
+            ref: "Conversation"
+        }
     ]
 });
 

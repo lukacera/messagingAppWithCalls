@@ -6,6 +6,6 @@ export type UserType = {
     password_hash: string,
     created_at: Date,
     updated_at: Date,
-    contacts: ObjectId[]
-    
+    contacts: ObjectId[],
+    conversations: ObjectId[]
 }

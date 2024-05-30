@@ -1,20 +1,17 @@
 "use client"
 import { CldImage } from 'next-cloudinary'
-import React, { useContext } from 'react'
+import React from 'react'
 import { FaSearch } from "react-icons/fa";
 import SingleProfileSidebar from '../components/mainPageComponents/SingleProfileSidebar';
 import withAuth from '../components/withAuth';
 import { FaPhone } from "react-icons/fa6";
 import { BsCameraVideoFill } from "react-icons/bs";
-import { UserContext } from '@/contexts/UserContext';
 
 function HomePage() {
-
-    const {currentUserData} = useContext(UserContext)
     return (
         <main className='w-screen h-screen grid grid-cols-[8%_17%_75%]'>
             {/* First column */}
-            <div className ='flex items-end justify-center pb-20 border-r-2 border-black'>
+            <div className ='flex items-end justify-center pb-20 bg-[#EEEEEE]'>
                     <div className='w-[9rem] aspect-square absolute -top-5 left-0'>
                         <CldImage
                         alt=''
@@ -24,13 +21,14 @@ function HomePage() {
                     </div>
                     <CldImage
                         alt=''
-                        src="hdnuek1hrbvbkihpuvkm"
+                        src="360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD_d9f3jx"
                         height={70}
                         width={70}
+                        className='rounded-full'
                         />
             </div>
-            {/* Second column */}
-            <div className='grid grid-rows-[10%_90%]'>
+            {/* Second column, shadow on right side of container */}
+            <div className='grid grid-rows-[10%_90%] shadow-[2px_0_5px_-2px_#888]'> 
                 <div className='grid place-items-center'>
                     <div className='flex items-center gap-4 bg-white
                     px-4 rounded-lg border-2 border-gray-400'>
@@ -54,7 +52,8 @@ function HomePage() {
             </div>
             {/* Third column */}
             <div className='grid grid-rows-[10%_90%]'>
-                <div className='w-full flex justify-between px-10'>
+                <div className='w-full flex justify-between px-10
+                    shadow-[2px_2px_5px_-2px_#888]'>                    
                     <div className='flex items-center gap-4'>
                         <div className='w-10 aspect-square rounded-full bg-green-500'>
                         </div>
